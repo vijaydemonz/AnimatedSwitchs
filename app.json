@@ -1,12 +1,10 @@
 {
-  "name": "react-native-shapes",
-  "displayName": "react-native-shapes",
+  "name": "animated-switch",
+  "displayName": "animated-switch",
   "expo": {
-    "name": "react-native-shapes",
-    "slug": "react-native-shapes",
+    "name": "animated-switch",
+    "slug": "animated-switch",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"]
   }
 }

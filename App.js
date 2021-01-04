@@ -1,21 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { View } from "react-native";
+import DarkModeSwitch from "./DarkMoodSwitch";
 
 export default function App() {
+  const [isOn, setIsOn] = useState(false);
+
+  const handleSwitch = () => {
+    setIsOn((d) => !d);
+  };
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <DarkModeSwitch
+        size={100}
+        value={isOn}
+        handleSwitch={handleSwitch}
+        knobColor={"orange"}
+        borderColor={"orange"}
+        backgroundColor={"black"}
+        tintColor={"red"}
+        borderWidth={2}
+        animationSpeed={"fast"}
+        elevation={10}
+      />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
