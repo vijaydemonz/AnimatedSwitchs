@@ -9,11 +9,11 @@ export default function DarkModeSwitch({
   size,
   borderColor,
   borderWidth,
-  // knobColor,
+  knobColor,
   animationSpeed,
   elevation,
-  darkModeTint,
-  lightModeTint,
+  darkModeBg,
+  lightModeBg,
 }) {
   const translateX = useRef(new Animated.Value(0)).current;
   const SIZE = size;
@@ -33,12 +33,12 @@ export default function DarkModeSwitch({
 
   const backgroundColor = translateX.interpolate({
     inputRange: [0, 90],
-    outputRange: [lightModeTint, darkModeTint],
+    outputRange: [lightModeBg, darkModeBg],
   });
-  const knobColor = translateX.interpolate({
-    inputRange: [0, 90],
-    outputRange: [darkModeTint, lightModeTint],
-  });
+  // const knobColor = translateX.interpolate({
+  //   inputRange: [0, 90],
+  //   outputRange: [darkModeTint, lightModeTint],
+  // });
 
   const styles = {
     container: {
@@ -119,11 +119,12 @@ DarkModeSwitch.propTypes = {
 
 DarkModeSwitch.defaultProps = {
   size: 100,
-  value: false,
-  knobColor: "black",
-  borderColor: "black",
-  backgroundColor: "white",
+  value: isOn,
+  knobColor: "orange",
+  borderColor: "orange",
+  lightModeBg: "white",
+  darkModeBg: "black",
   borderWidth: 2,
   animationSpeed: "fast",
-  elevation: 5,
+  elevation: 10,
 };

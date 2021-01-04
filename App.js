@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import DarkModeSwitch from "./DarkMoodSwitch";
+import DarkModeSwitch from "react-native-animated-switch";
 
 export default function App() {
   const [isOn, setIsOn] = useState(false);
@@ -16,13 +16,11 @@ export default function App() {
         handleSwitch={handleSwitch}
         knobColor={"orange"}
         borderColor={"orange"}
-        backgroundColor={"black"}
-        tintColor={"red"}
+        lightModeBg={"white"}
+        darkModeBg={"black"}
         borderWidth={2}
         animationSpeed={"fast"}
         elevation={10}
-        darkModeTint={"black"}
-        lightModeTint={"white"}
       />
     </View>
   );
