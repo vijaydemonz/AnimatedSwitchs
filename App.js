@@ -21,6 +21,8 @@ export default function App() {
         borderWidth={2}
         animationSpeed={"fast"}
         elevation={10}
+        darkModeTint={"black"}
+        lightModeTint={"white"}
       />
     </View>
   );

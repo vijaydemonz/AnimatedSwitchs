@@ -7,12 +7,13 @@ export default function DarkModeSwitch({
   value,
   handleSwitch,
   size,
-  knobColor,
   borderColor,
   borderWidth,
-  backgroundColor,
+  // knobColor,
   animationSpeed,
   elevation,
+  darkModeTint,
+  lightModeTint,
 }) {
   const translateX = useRef(new Animated.Value(0)).current;
   const SIZE = size;
@@ -25,10 +26,19 @@ export default function DarkModeSwitch({
           : animationSpeed === "medium"
           ? 200
           : 500,
-      useNativeDriver: true,
+      useNativeDriver: false,
       easing: Easing.in,
     }).start();
   }, [value]);
+
+  const backgroundColor = translateX.interpolate({
+    inputRange: [0, 90],
+    outputRange: [lightModeTint, darkModeTint],
+  });
+  const knobColor = translateX.interpolate({
+    inputRange: [0, 90],
+    outputRange: [darkModeTint, lightModeTint],
+  });
 
   const styles = {
     container: {
@@ -55,7 +65,7 @@ export default function DarkModeSwitch({
       ],
       opacity: translateX.interpolate({
         inputRange: [SIZE * 0.4, SIZE * 0.5, SIZE * 0.7],
-        outputRange: [0, 1, 1],
+        outputRange: [0, 0, 1],
       }),
       width: SIZE * 0.4,
       height: SIZE * 0.25,
@@ -86,10 +96,10 @@ export default function DarkModeSwitch({
   return (
     <>
       <TapGestureHandler onHandlerStateChange={(e) => handleSwitch()}>
-        <View style={styles.container}>
+        <Animated.View style={styles.container}>
           <Animated.View style={styles.moonLayer} />
           <Animated.View style={styles.knob} />
-        </View>
+        </Animated.View>
       </TapGestureHandler>
     </>
   );
