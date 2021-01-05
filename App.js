@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View } from "react-native";
-import DarkModeSwitch from "react-native-animated-switch";
+import { AnimatedSwitch } from "react-native-animated-switch";
 
 export default function App() {
   const [isOn, setIsOn] = useState(false);
@@ -8,12 +8,13 @@ export default function App() {
   const handleSwitch = () => {
     setIsOn((d) => !d);
   };
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <DarkModeSwitch
+      <AnimatedSwitch
         size={100}
         value={isOn}
-        handleSwitch={handleSwitch}
+        handleSwitch={() => handleSwitch()}
         knobColor={"orange"}
         borderColor={"orange"}
         lightModeBg={"white"}

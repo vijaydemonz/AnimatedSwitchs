@@ -3,7 +3,7 @@ import { Easing, View, Animated } from "react-native";
 import { TapGestureHandler } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
 
-export default function DarkModeSwitch({
+export default function AnimatedSwitch({
   value,
   handleSwitch,
   size,
@@ -105,7 +105,7 @@ export default function DarkModeSwitch({
   );
 }
 
-DarkModeSwitch.propTypes = {
+AnimatedSwitch.propTypes = {
   value: PropTypes.bool.isRequired,
   handleSwitch: PropTypes.func.isRequired,
   size: PropTypes.number.isRequired,
@@ -117,9 +117,9 @@ DarkModeSwitch.propTypes = {
   elevation: PropTypes.number,
 };
 
-DarkModeSwitch.defaultProps = {
+AnimatedSwitch.defaultProps = {
   size: 100,
-  value: isOn,
+  value: false,
   knobColor: "orange",
   borderColor: "orange",
   lightModeBg: "white",
