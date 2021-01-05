@@ -11,20 +11,32 @@ This npm is to help react native developers animating and customizing switchs fo
 | lightModeBg    | white       | string(hex color/rgb) | day mode color                    | no          |
 | borderColor    | orange      | string(hex color/rgb) | border color of switch            | no          |
 | borderWidth    | orange      | string(hex color/rgb) | border width of switch            | no          |
-| elevation      | 5           | number                | to add shadow to switch if needed | no          |
+| elevation      | 10          | number                | to add shadow to switch if needed | no          |
 | knobColor      | orange      | string(hex color/rgb) | knob color                        | yes         |
 | animationSpeed | fast        | `fast;medium;slow`    | animation speed of transition     | no          |
 
 ## Demo
 
-![demo](./demo.gif)
+![demo](https://raw.githubusercontent.com/vijaydemonz/AnimatedSwitchs/AnimatedSwitches/demo.gif)
+
+### Installation
+
+```javascript
+npm i react-native-animated-switch
+```
+
+### Importing
+
+```javascript
+import { AnimatedSwitch } from "react-native-animated-switch";
+```
 
 ### Usage example
 
 ```javascript
 import React, { useState } from "react";
 import { View } from "react-native";
-import AnimatedSwitch from "react-native-animated-switch";
+import { AnimatedSwitch } from "react-native-animated-switch";
 
 export default function App() {
   const [isOn, setIsOn] = useState(false);
