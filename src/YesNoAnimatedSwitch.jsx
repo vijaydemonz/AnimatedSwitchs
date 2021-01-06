@@ -7,7 +7,7 @@ import { Feather } from "@expo/vector-icons";
 
 export default function YesNoAnimatedSwitch({
   value,
-  handleSwitch,
+  onChange,
   size,
   borderColor,
   borderWidth,
@@ -100,7 +100,7 @@ export default function YesNoAnimatedSwitch({
   };
   return (
     <>
-      <TapGestureHandler onHandlerStateChange={(e) => handleSwitch()}>
+      <TapGestureHandler onHandlerStateChange={(e) => onChange()}>
         <Animated.View style={styles.container}>
           <Animated.View style={styles.knob}>
             <Animated.View
@@ -152,7 +152,7 @@ export default function YesNoAnimatedSwitch({
 
 YesNoAnimatedSwitch.propTypes = {
   value: PropTypes.bool.isRequired,
-  handleSwitch: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   size: PropTypes.number.isRequired,
   knobColor: PropTypes.string,
   borderColor: PropTypes.string,

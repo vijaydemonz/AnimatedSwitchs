@@ -1,23 +1,22 @@
 import React, { useEffect, useRef } from "react";
-import { Easing, View, Animated } from "react-native";
+import { Easing, View, Animated, Text } from "react-native";
 import { TapGestureHandler } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
-import { Ionicons } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
+import { LinearGradient } from "expo-linear-gradient";
 
-export default function SmileSwitch({
+export default function GradientSwitch({
   value,
-  handleSwitch,
+  onChange,
   size,
   borderColor,
   borderWidth,
   knobColor,
   animationSpeed,
   elevation,
-  onColor,
-  offColor = "white",
+  indicatorColor = "white",
   backgroundColor = "white",
 }) {
+  const AnimatedGradient = Animated.createAnimatedComponent(LinearGradient);
   const translateX = useRef(new Animated.Value(0)).current;
   const SIZE = size;
   useEffect(() => {
@@ -33,13 +32,6 @@ export default function SmileSwitch({
       easing: Easing.in,
     }).start();
   }, [value]);
-
-  //   const backgroundColor = lightModeBg;
-  // const knobColor = translateX.interpolate({
-  //   inputRange: [0, 90],
-  //   outputRange: [darkModeTint, lightModeTint],
-  // });
-
   const styles = {
     container: {
       width: SIZE * 1,
@@ -50,8 +42,6 @@ export default function SmileSwitch({
       justifyContent: "center",
       alignItems: "flex-start",
       padding: SIZE * 0.05,
-      //   borderColor,
-      //   borderWidth,
     },
     moonLayer: {
       transform: [
@@ -82,77 +72,87 @@ export default function SmileSwitch({
       transform: [
         {
           translateX: translateX.interpolate({
-            inputRange: [0, SIZE * 0.9],
-            outputRange: [0, SIZE * 0.4],
+            inputRange: [0, SIZE * 1.05],
+            outputRange: [0, SIZE * 0.5],
+          }),
+        },
+        {
+          scaleX: translateX.interpolate({
+            inputRange: [0, SIZE * 0.5, SIZE * 1.05],
+            outputRange: [1, 2, 1],
           }),
         },
       ],
+      elevation: 11,
       justifyContent: "center",
       alignItems: "center",
       width: SIZE * 0.4,
       height: SIZE * 0.4,
-      backgroundColor: translateX.interpolate({
-        inputRange: [0, SIZE * 1.05],
-        outputRange: [offColor, onColor],
-      }),
+      backgroundColor: "white",
       borderRadius: SIZE * 0.2,
     },
   };
   return (
     <>
-      <TapGestureHandler onHandlerStateChange={(e) => handleSwitch()}>
-        <Animated.View style={styles.container}>
-          <Animated.View style={styles.knob}>
-            <Animated.View
+      <TapGestureHandler onHandlerStateChange={(e) => onChange()}>
+        <AnimatedGradient colors={["#777", "#434343"]} style={styles.container}>
+          <Animated.View style={styles.knob} />
+          <View
+            style={{
+              position: "absolute",
+              justifyContent: "center",
+              alignItems: "flex-end",
+              padding: SIZE * 0.15,
+              alignSelf: "flex-end",
+            }}
+          >
+            <Text
               style={{
-                width: SIZE * 0.22,
-                height: SIZE * 0.22,
-                borderRadius: SIZE * 0.1,
-                justifyContent: "center",
-                alignItems: "center",
-                transform: [
-                  {
-                    rotate: translateX.interpolate({
-                      inputRange: [0, SIZE * 1.05],
-                      outputRange: ["0deg", "360deg"],
-                    }),
-                  },
-                ],
+                color: "white",
+                fontFamily: "monospace",
+                fontWeight: "bold",
               }}
             >
-              <Animated.View
-                style={{
-                  position: "absolute",
-                  opacity: translateX.interpolate({
-                    inputRange: [0, SIZE * 1.05],
-                    outputRange: [0, 1],
-                  }),
-                }}
-              >
-                <Feather name={"check"} size={24} color="white" />
-              </Animated.View>
-              <Animated.View
-                style={{
-                  opacity: translateX.interpolate({
-                    inputRange: [0, SIZE * 1.05],
-                    outputRange: [1, 0],
-                  }),
-                  position: "absolute",
-                }}
-              >
-                <Ionicons name={"close"} size={25} color={"white"} />
-              </Animated.View>
-            </Animated.View>
-          </Animated.View>
-        </Animated.View>
+              OFF
+            </Text>
+          </View>
+          <AnimatedGradient
+            colors={["#38ef7d", "#11998e"]}
+            start={{ x: 0, y: 1 }}
+            end={{ x: 1, y: 0 }}
+            style={[
+              styles.container,
+              {
+                opacity: translateX.interpolate({
+                  inputRange: [0, SIZE * 1],
+                  outputRange: [0, 1],
+                }),
+                padding: SIZE * 0.15,
+                position: "absolute",
+                justifyContent: "center",
+                alignItems: "flex-start",
+              },
+            ]}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "monospace",
+                fontWeight: "bold",
+              }}
+            >
+              ON
+            </Text>
+          </AnimatedGradient>
+        </AnimatedGradient>
       </TapGestureHandler>
     </>
   );
 }
 
-SmileSwitch.propTypes = {
+GradientSwitch.propTypes = {
   value: PropTypes.bool.isRequired,
-  handleSwitch: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   size: PropTypes.number.isRequired,
   knobColor: PropTypes.string,
   borderColor: PropTypes.string,
@@ -162,13 +162,13 @@ SmileSwitch.propTypes = {
   elevation: PropTypes.number,
 };
 
-SmileSwitch.defaultProps = {
+GradientSwitch.defaultProps = {
   size: 100,
   value: false,
   knobColor: "orange",
   borderColor: "orange",
-  lightModeBg: "white",
-  darkModeBg: "black",
+  activeColor: "white",
+  inActiveColor: "black",
   borderWidth: 2,
   animationSpeed: "fast",
   elevation: 10,

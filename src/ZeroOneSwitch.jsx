@@ -3,23 +3,23 @@ import { Easing, View, Animated } from "react-native";
 import { TapGestureHandler } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
 
-export default function AnimatedSwitch({
+export default function ZeroOneSwitch({
   value,
-  handleSwitch,
+  onChange,
   size,
   borderColor,
   borderWidth,
   knobColor,
   animationSpeed,
   elevation,
-  darkModeBg,
-  lightModeBg,
+  indicatorColor = "white",
+  backgroundColor = "white",
 }) {
   const translateX = useRef(new Animated.Value(0)).current;
   const SIZE = size;
   useEffect(() => {
     Animated.timing(translateX, {
-      toValue: value ? SIZE * 0.9 : 0,
+      toValue: value ? SIZE * 1.05 : 0,
       duration:
         animationSpeed === "fast"
           ? 100
@@ -30,15 +30,6 @@ export default function AnimatedSwitch({
       easing: Easing.in,
     }).start();
   }, [value]);
-
-  const backgroundColor = translateX.interpolate({
-    inputRange: [0, 90],
-    outputRange: [lightModeBg, darkModeBg],
-  });
-  // const knobColor = translateX.interpolate({
-  //   inputRange: [0, 90],
-  //   outputRange: [darkModeTint, lightModeTint],
-  // });
 
   const styles = {
     container: {
@@ -83,31 +74,45 @@ export default function AnimatedSwitch({
         {
           translateX: translateX.interpolate({
             inputRange: [0, SIZE * 0.9],
-            outputRange: [0, SIZE * 0.51],
+            outputRange: [0, SIZE * 0.4],
           }),
         },
       ],
-      width: SIZE * 0.36,
-      height: SIZE * 0.36,
+      justifyContent: "center",
+      alignItems: "center",
+      width: SIZE * 0.4,
+      height: SIZE * 0.4,
       backgroundColor: knobColor,
-      borderRadius: SIZE * 0.18,
+      borderRadius: SIZE * 0.2,
+    },
+    indicator: {
+      width: translateX.interpolate({
+        inputRange: [0, SIZE * 0.9],
+        outputRange: [SIZE * 0.22, 0],
+        extrapolate: "clamp",
+      }),
+      height: SIZE * 0.22,
+      borderRadius: (SIZE * 0.9) / 2,
+      borderWidth: SIZE * 0.03,
+      borderColor: indicatorColor,
     },
   };
   return (
     <>
-      <TapGestureHandler onHandlerStateChange={(e) => handleSwitch()}>
+      <TapGestureHandler onHandlerStateChange={(e) => onChange()}>
         <Animated.View style={styles.container}>
-          <Animated.View style={styles.moonLayer} />
-          <Animated.View style={styles.knob} />
+          <Animated.View style={styles.knob}>
+            <Animated.View style={styles.indicator} />
+          </Animated.View>
         </Animated.View>
       </TapGestureHandler>
     </>
   );
 }
 
-AnimatedSwitch.propTypes = {
+ZeroOneSwitch.propTypes = {
   value: PropTypes.bool.isRequired,
-  handleSwitch: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   size: PropTypes.number.isRequired,
   knobColor: PropTypes.string,
   borderColor: PropTypes.string,
@@ -117,12 +122,12 @@ AnimatedSwitch.propTypes = {
   elevation: PropTypes.number,
 };
 
-AnimatedSwitch.defaultProps = {
+ZeroOneSwitch.defaultProps = {
   size: 100,
   value: false,
   knobColor: "orange",
   borderColor: "orange",
-  lightModeBg: "white",
+  activeColor: "white",
   darkModeBg: "black",
   borderWidth: 2,
   animationSpeed: "fast",

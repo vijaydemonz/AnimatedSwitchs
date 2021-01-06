@@ -6,9 +6,9 @@ This npm is to help react native developers animating and customizing switchs fo
 | -------------- | ----------- | --------------------- | --------------------------------- | ----------- |
 | Size           | 100         | number                | size of switch in pixels          | yes         |
 | value          | false       | bool                  | state of switch                   | yes         |
-| handleSwitch   | null        | func                  | onChange funtion for switch       | yes         |
-| darkModeBg     | black       | string(hex color/rgb) | nightmode color                   | no          |
-| lightModeBg    | white       | string(hex color/rgb) | day mode color                    | no          |
+| onChange       | null        | func                  | onChange funtion for switch       | yes         |
+| inActiveColor  | black       | string(hex color/rgb) | nightmode color                   | no          |
+| activeColor    | white       | string(hex color/rgb) | day mode color                    | no          |
 | borderColor    | orange      | string(hex color/rgb) | border color of switch            | no          |
 | borderWidth    | orange      | string(hex color/rgb) | border width of switch            | no          |
 | elevation      | 10          | number                | to add shadow to switch if needed | no          |
@@ -41,7 +41,7 @@ import { AnimatedSwitch } from "react-native-animated-switch";
 export default function App() {
   const [isOn, setIsOn] = useState(false);
 
-  const handleSwitch = () => {
+  const onChange = () => {
     setIsOn((d) => !d);
   };
   return (
@@ -49,11 +49,11 @@ export default function App() {
       <AnimatedSwitch
         size={100}
         value={isOn}
-        handleSwitch={handleSwitch}
+        onChange={onChange}
         knobColor={"orange"}
         borderColor={"orange"}
-        lightModeBg={"white"}
-        darkModeBg={"black"}
+        activeColor={"white"}
+        inActiveColor={"black"}
         borderWidth={2}
         animationSpeed={"fast"}
         elevation={10}
