@@ -103,7 +103,7 @@ export default function YesNoSwitch({
               <Feather name={"check"} size={size * 0.24} color="white" />
             </Animated.View>
             <Animated.View style={styles.close}>
-              <Ionicons name={"close"} size={size * 0.24} color={"white"} />
+              <Ionicons name={"ios-close"} size={size * 0.24} color={"white"} />
             </Animated.View>
           </Animated.View>
         </Animated.View>

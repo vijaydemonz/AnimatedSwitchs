@@ -18,7 +18,7 @@ import { DarkmodeSwitch } from "react-native-animated-switch";
 
 ```javascript
 import React, { useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import {
   DarkModeSwitch,
   GradientSwitch,
@@ -29,6 +29,7 @@ import {
   SwitcherFullStrech,
   ZeroOneSwitch,
 } from "react-native-animated-switch";
+
 export default function App() {
   const [isOn, setIsOn] = useState(false);
 
@@ -180,6 +181,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+});
+
 });
 ```
 
